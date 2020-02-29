@@ -35,6 +35,8 @@ function App() {
       <h1>Hello world!!</h1>
       <LocalState />
       <ExplainBindingsComponent />
+
+      <SplitUpAppComponent />
     </div>
   );
 }
@@ -75,6 +77,7 @@ class LocalState extends Component {
   }
 
   render() {
+    const { searchTerm, list } = this.state;
     return (
       <div className="TestLocalState">
         <form>
@@ -82,6 +85,7 @@ class LocalState extends Component {
             className="form-control form-control-lg"
             type="text"
             placeholder="Title"
+            value={searchTerm} // controlled component : state is the only source of truth
             onChange={this.onSearchChange}
           ></input>
         </form>
@@ -98,6 +102,82 @@ class LocalState extends Component {
             <button
               type="button"
               onClick={() => this.onDismiss(item.objectID)}
+              className="btn btn-primary"
+            >
+              Dismiss
+            </button>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
+class SplitUpAppComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list,
+      searchTerm: ""
+    };
+    this.onSearchChange = this.onSearchChange.bind(this);
+    this.onDismiss = this.onDismiss.bind(this);
+  }
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+
+  onDismiss(id) {
+    const isNotId = item => item.objectID !== id;
+    const listUpdated = this.state.list.filter(isNotId);
+    this.setState({ list: listUpdated });
+  }
+
+  render() {
+    const { searchTerm, list } = this.state;
+    return (
+      <div>
+        <Search value={searchTerm} onChange={this.onSearchChange} />
+        <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
+      </div>
+    );
+  }
+}
+class Search extends Component {
+  render() {
+    const { searchTerm, onChange } = this.props;
+    return (
+      <form>
+        <input
+          className="form-control form-control-lg"
+          type="text"
+          placeholder="Title"
+          value={searchTerm}
+          onChange={onChange}
+        />
+      </form>
+    );
+  }
+}
+
+class Table extends Component {
+  render() {
+    const { list, pattern, onDismiss } = this.props;
+    return (
+      <div>
+        {list.filter(isSearched(pattern)).map(item => (
+          <div
+            className="col p-4 d-flex flex-column position-static"
+            key={item.objectID}
+          >
+            <span className="mb-0">{item.title}</span>
+            <span className="card-text mb-auto">{item.author}</span>
+            <a href={item.url} className="alert-link">
+              {item.url}
+            </a>
+            <button
+              type="button"
+              onClick={() => onDismiss(item.objectID)}
               className="btn btn-primary"
             >
               Dismiss
