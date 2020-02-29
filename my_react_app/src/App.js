@@ -137,7 +137,9 @@ class SplitUpAppComponent extends Component {
     const { searchTerm, list } = this.state;
     return (
       <div>
-        <Search value={searchTerm} onChange={this.onSearchChange} />
+        <Search value={searchTerm} onChange={this.onSearchChange}>
+          Search and filter
+        </Search>
         <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
       </div>
     );
@@ -145,9 +147,10 @@ class SplitUpAppComponent extends Component {
 }
 class Search extends Component {
   render() {
-    const { searchTerm, onChange } = this.props;
+    const { searchTerm, onChange, children } = this.props;
     return (
       <form>
+        {children}{" "}
         <input
           className="form-control form-control-lg"
           type="text"
