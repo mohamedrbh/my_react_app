@@ -145,51 +145,99 @@ class SplitUpAppComponent extends Component {
     );
   }
 }
-class Search extends Component {
-  render() {
-    const { searchTerm, onChange, children } = this.props;
-    return (
-      <form>
-        {children}{" "}
-        <input
-          className="form-control form-control-lg"
-          type="text"
-          placeholder="Title"
-          value={searchTerm}
-          onChange={onChange}
-        />
-      </form>
-    );
-  }
+
+// ES6 class component declation for Search component
+
+// class Search extends Component {
+//   render() {
+//     const { searchTerm, onChange, children } = this.props;
+//     return (
+//       <form>
+//         {children}{" "}
+//         <input
+//           className="form-control form-control-lg"
+//           type="text"
+//           placeholder="Title"
+//           value={searchTerm}
+//           onChange={onChange}
+//         />
+//       </form>
+//     );
+//   }
+// }
+
+// Functional stateless component declaration for Search component
+function Search({ value, onChange, children }) {
+  return (
+    <form>
+      {children}
+      <input
+        className="form-control form-control-lg"
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+    </form>
+  );
 }
 
-class Table extends Component {
-  render() {
-    const { list, pattern, onDismiss } = this.props;
-    return (
-      <div>
-        {list.filter(isSearched(pattern)).map(item => (
-          <div
-            className="col p-4 d-flex flex-column position-static"
-            key={item.objectID}
+// ES6 class component declation for Table component
+
+// class Table extends Component {
+//   render() {
+//     const { list, pattern, onDismiss } = this.props;
+//     return (
+//       <div>
+//         {list.filter(isSearched(pattern)).map(item => (
+//           <div
+//             className="col p-4 d-flex flex-column position-static"
+//             key={item.objectID}
+//           >
+//             <span className="mb-0">{item.title}</span>
+//             <span className="card-text mb-auto">{item.author}</span>
+//             <a href={item.url} className="alert-link">
+//               {item.url}
+//             </a>
+//             <button
+//               type="button"
+//               onClick={() => onDismiss(item.objectID)}
+//               className="btn btn-primary"
+//             >
+//               Dismiss
+//             </button>
+//           </div>
+//         ))}
+//       </div>
+//     );
+//   }
+// }
+
+// Function stateless component for Table component
+
+function Table({ list, pattern, onDismiss }) {
+  return (
+    <div>
+      {list.filter(isSearched(pattern)).map(item => (
+        <div
+          className="col p-4 d-flex flex-column position-static"
+          key={item.objectID}
+        >
+          <span className="mb-0">{item.title}</span>
+          <span className="card-text mb-auto">{item.author}</span>
+          <a href={item.url} className="alert-link">
+            {item.url}
+          </a>
+          <button
+            type="button"
+            onClick={() => onDismiss(item.objectID)}
+            className="btn btn-primary"
           >
-            <span className="mb-0">{item.title}</span>
-            <span className="card-text mb-auto">{item.author}</span>
-            <a href={item.url} className="alert-link">
-              {item.url}
-            </a>
-            <button
-              type="button"
-              onClick={() => onDismiss(item.objectID)}
-              className="btn btn-primary"
-            >
-              Dismiss
-            </button>
-          </div>
-        ))}
-      </div>
-    );
-  }
+            Dismiss
+          </button>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 class ExplainBindingsComponent extends Component {
