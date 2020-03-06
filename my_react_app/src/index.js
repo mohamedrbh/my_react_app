@@ -2,11 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import RealAPI from "./components/RealAPI";
 import * as serviceWorker from "./serviceWorker";
-
+import LifecycleA from "./components/LifecycleMount";
+import LifecycleB from "./components/LifecycleUpdate";
+import MainComponent from "./components/RealAPI";
 ReactDOM.render(
   <div>
-    <App />
+    <RealAPI />
   </div>,
   document.getElementById("root")
 );

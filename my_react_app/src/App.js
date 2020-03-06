@@ -228,6 +228,7 @@ function Table({ list, pattern, onDismiss }) {
             {item.url}
           </a>
           <button
+            style={{ width: "40%" }}
             type="button"
             onClick={() => onDismiss(item.objectID)}
             className="btn btn-primary"
